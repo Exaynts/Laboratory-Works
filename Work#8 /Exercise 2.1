@@ -1,8 +1,22 @@
+// Предполагается, что ввод строки "0" означает конец ввода значений
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
 
+// Ввод значений стека
+int Input(int len, vector <string>& List) {
+	string Latest_string = "1";
+	while (Latest_string != "0") {
+		List.resize(len + 1);
+		cin >> Latest_string;
+		List[len] = Latest_string;
+		len += 1;
+	}
+	len -= 1;
+	List.resize(len);
+	return len;
+}
 // Добавление элементов
 int Push(int len, vector <string> &List) {
 	string push = "1";
@@ -16,7 +30,6 @@ int Push(int len, vector <string> &List) {
 	}
 	len -= 1;
 	List.resize(len);
-	cout << "len = " << len << endl;
 	return len;
 }
 //«sdf», «2», «ssd4», «hello» 
@@ -67,16 +80,7 @@ int main() {
 	vector <string> List(0);
 	int len = 0;
 	// Ввод значений стека
-	string Latest_string = "1";
-	while (Latest_string != "0") {
-		List.resize(len+1);
-		cin >> Latest_string;
-		List[len] = Latest_string;
-		len += 1;
-	}
-	len -= 1;
-	List.resize(len);
-
+	len = Input(len, List);
 	// Добавление элементов
 	len = Push(len, List);
 	// Вывод стека1
