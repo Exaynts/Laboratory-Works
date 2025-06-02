@@ -1,0 +1,86 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+using namespace std;
+
+// Описание компьютера
+struct Computer {
+    string computername;
+    float processor_frequency; // В ГГц
+    float RAM_size; // в Гб
+    float hard_drive_size; // в Гб
+    float price;
+
+} computer;
+
+//  Чтение данных из файла
+vector <Computer> ReadFile(const string& filename) {
+    vector <Computer> computers;
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Ошибка открытия файла" << endl;
+    }
+    else {
+        Computer computer;
+        while (file >> computer.computername >> computer.processor_frequency>> computer.RAM_size
+        >> computer.hard_drive_size>> computer.price) {
+            computers.push_back(computer);
+        }
+        file.close();
+    }
+    return computers;
+}
+
+// Обработка данных
+float Data_Processing(const vector <Computer>& computers) {
+    float sumprice = 0;
+    for (const auto& computer: computers) {
+        if (computer.processor_frequency > 2 or computer.computername == "Asus") {
+            sumprice += computer.price;
+        }
+    }
+    return sumprice;
+}
+
+// Вывод данных
+void Output_Data(const vector <Computer>& computers, float sumprice) {
+    cout << "Подходящие компьютеры: " << endl;
+    for (const auto& computer : computers) {
+        if (computer.processor_frequency > 2 or computer.computername == "Asus") {
+            cout << " " << computer.computername << " " << computer.processor_frequency << " " << computer.RAM_size
+                << " " << computer.hard_drive_size << " " << computer.price << endl;
+        }
+    }
+    cout << endl << "Общая цена всех компьютеров, удовлетворяющим условиям, равна " << sumprice << endl;
+}
+
+// Точка запуска программы
+int main() {
+    setlocale(LC_ALL, "ru");
+
+    // Открытие файла с данными
+    ifstream Computers;
+    Computers.open("computers.txt");
+    // Чтение данных из файла
+    vector <Computer> сomputers = ReadFile("computers.txt");
+    // Обработка данных
+    float sumprice = Data_Processing(сomputers);
+    // Вывод данных
+    Output_Data(сomputers, sumprice);
+
+    return 0;
+}
+
+/*
+// Попытка создания бинарного файла c данными (неудачная)
+string datafile = "computers.dat";
+//CreateBinaryFile(datafile);
+struct Computer computer[]{ {"Asus", 1.5, 4, 16, 30000},
+{ "IbetterThanAsus", 8, 32, 64, 100500 },
+{ "SomeComp", 2, 2, 12, 50000 }
+};
+ofstream ofs(datafile, ios::out and ios::binary);
+if (ofs.is_open()) {
+    ofs.write((char*)computer, sizeof(computer));
+}
+*/

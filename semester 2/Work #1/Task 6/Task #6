@@ -1,0 +1,49 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+// Просмотр содержимого файла
+void ReadingFile(string file) {
+    ifstream infile(file);
+    if (!infile.is_open())
+        cerr << "Ошибка открытия файлов" << endl;
+    else {
+        int number = 0;
+        while (infile >> number) {
+            cout << number << endl;
+        }
+        infile.close();
+    }
+}
+// Подсчёт кол-ва четных чисел в файле
+int EvenCount(string file) {
+    ifstream inFile(file);
+    if (!inFile.is_open())
+        cerr << "Ошибка открытия файлов" << endl;
+    else {
+        int number;
+        int even = 0; // Кол-во чётных чисел
+        while (inFile >> number) {
+            if (number % 2 == 0) {
+                even += 1;
+            }
+        }
+        inFile.close();
+        return even;
+    }
+}
+int main() {
+    setlocale(LC_ALL, "ru");
+    // Создание файла
+    ofstream outfile("ReadingFile.txt");
+    // Просмотр содержимого файла
+    ReadingFile("f.txt");
+    // Подсчёт кол-ва четных чисел в файле
+    int even = EvenCount("f.txt");
+    // Сохранение результата в новый файл
+    cout << "Количество четных чисел в файле равно " << even << endl;
+    outfile << "Количество четных чисел в файле равно " << even << endl;
+    outfile.close();
+
+    return 0;
+}

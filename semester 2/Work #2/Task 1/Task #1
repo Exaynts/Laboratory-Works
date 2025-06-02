@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+class Legs {
+public:
+    float FirstLeg;
+    float SecondLeg;
+    // Конструктор класса Legs
+    Legs(float p_FirstLeg, float p_SecondLeg)
+    {
+        FirstLeg = p_FirstLeg;
+        SecondLeg = p_SecondLeg;
+    }
+    // Обработка значений полей (Вычисление площади)
+    float AreaCalculating(float FirstLeg, float SecondLeg) {
+        return (FirstLeg * SecondLeg / 2.0);
+    }
+    //Строки информации об объекте
+    void InfoOfTriangle(float FirstLeg, float SecondLeg) {
+        cout << endl << "FirstLeg = " << FirstLeg << endl;
+        cout << "SecondLeg = " << SecondLeg << endl;
+        cout << "Area of this triangle equals " << AreaCalculating(FirstLeg,SecondLeg) << endl;
+    }
+};
+
+int main() {
+    // Ввод данных
+    float leg1, leg2;
+    cout << "Enter the first leg: ";
+    cin >> leg1;
+    cout << "Enter the second leg: ";
+    cin >> leg2;
+
+    // Создание объекта класса Legs
+    Legs triangle(leg1, leg2);
+    // Вывод информации
+    triangle.InfoOfTriangle(leg1, leg2);
+    return 0;
+}

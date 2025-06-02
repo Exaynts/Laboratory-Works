@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+// Ввод массива, из которого будет браться очередь
+int Input(int len, vector <int>& List) {
+	cout << "Ввод элементов в массив для очереди" << endl;
+	cout << "(Предполагается, что ввод числа '0' означает конец ввода значений)" << endl;
+	int Latest_int = 1;
+	while (Latest_int != 0) {
+		List.resize(len + 1);
+		cin >> Latest_int;
+		List[len] = Latest_int;
+		len += 1;
+	}
+	len -= 1;
+	List.resize(len);
+	return len;
+}
+// Извлечение элементов из очереди
+int Extraction(int len, vector <int>& List, int p1, int p2) {
+	queue <int> Ext_Queue;
+	int* new_p1 = &p1;
+	Ext_Queue.push(1);
+	while (*new_p1 <= p2 and Ext_Queue.front() % 2 != 0) {
+		Ext_Queue.push(List[*new_p1]);
+		cout << Ext_Queue.back() << endl;
+		Ext_Queue.pop();
+		*new_p1 += 1;
+	}
+	return p1;
+}
+// Вывод новых указателей очереди
+void Output_new_address(int len, vector <int>& List, int p1, int p2) {
+	if (p1 <= p2) {
+		cout << "Адрес p1: " << &p1 << endl;
+		cout << "Адрес p2: " << &p2 << endl;
+	}
+	else {
+		cout << "nil" << endl;
+		cout << "nil";
+	}
+}
+
+// Точка запуска программы
+int main() {
+	setlocale(LC_ALL, "Russian");
+
+	vector <int> List(0);
+	int len = 0;
+	// Ввод массива, из которого будет браться очередь
+	Input(len, List);
+	// Ввод указателей p1 и p2
+	int p1, p2;
+	cout << "p1 = ";
+	cin >> p1;
+	cout << "p2 = ";
+	cin >> p2;
+	// Извлечение элементов из очереди
+	p1 = Extraction(len, List, p1, p2);
+	// Вывод новых указателей очереди
+	Output_new_address(len, List, p1, p2);
+	return 0;
+}

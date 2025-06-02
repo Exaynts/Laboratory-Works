@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+using namespace std;
+
+// Описание клиента
+struct Client {
+    string SurnameNP; // Фамилия и инициалы
+    float cost_of_services;
+    int paid_month;
+    int paid_month_in_advance;
+} client;
+
+//  Чтение данных из файла
+vector <Client> ReadFile(const string& filename) {
+    vector <Client> clients;
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Ошибка открытия файла" << endl;
+    }
+    else {
+        Client computer;
+        while (file >> client.SurnameNP >> client.cost_of_services >> client.paid_month
+            >> client.paid_month_in_advance) {
+            clients.push_back(client);
+        }
+        file.close();
+    }
+    return clients;
+}
+
+// Обработка данных
+void Data_Processing(vector <Client>& clients) {
+    for (auto& client : clients) {
+        if (client.paid_month_in_advance > 3) {
+            client.cost_of_services *= (1 - 0.05);
+        }
+    }
+}
+
+// Вывод данных
+void Output_Data(const vector <Client>& clients) {
+    cout << "Данные клиентов: " << endl;
+    for (const auto& client : clients) {
+        cout << " " << client.SurnameNP << " " << client.cost_of_services << " " << client.paid_month
+        << " " << client.paid_month_in_advance << endl;
+    }
+}
+
+// Точка запуска программы
+int main() {
+    setlocale(LC_ALL, "ru");
+
+    // Открытие файла с данными
+    ifstream Clients;
+    Clients.open("clients.txt");
+    // Чтение данных из файла
+    vector <Client> clients = ReadFile("clients.txt");
+    // Обработка данных
+    Data_Processing(clients);
+    // Вывод данных
+    Output_Data(clients);
+
+    return 0;
+}

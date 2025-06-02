@@ -1,0 +1,54 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Обработка текста
+pair<int, int> ProcessingText(string& text) {
+    // Определение строк
+    char deletestr{ '@' };
+    string new_text; // Формируемая строка
+    int words = 1;  // Cчётчик числа слов (перед первым словом не ставят пробел, поэтому начинаем с 1)
+    int sentences = 0;  // Cчетчик числа предложений
+    // Цикл перебора символов в исходном тексте
+    for (string::size_type i = 0; i < text.length(); i++) {
+        char signs[4]{ '.', '?', '!', '0' };
+        // Удаление символа
+        if (text[i] == deletestr) {}
+        // Подсчёт слов будем реализовывать подсчётом одинарных пробелов
+        else if (text[i] == ' ') {
+            new_text.push_back(tolower(text[i]));
+            if (text[i + 1] != ' ')
+                words += 1;
+        }
+        // Подсчёт предложений будем реализовывать подсчётом знаков . ? !
+        else if (strchr(signs, text[i])) { // проверяем наличие символа в списке
+            new_text.push_back(tolower(text[i]));
+            if (!strchr(signs, text[i + 1]))
+                sentences += 1;
+            else if (i+1 == text.length())
+                sentences += 1;
+        }
+        else
+            // tolower() -- преобразует символы в нижний регистр
+            new_text.push_back(tolower(text[i]));
+    }
+    text = new_text;
+    return pair<int, int>(sentences, words);
+}
+
+int main() {
+    // Ввод текста
+    setlocale(LC_ALL, "ru");
+    system("chcp 1251 > nul");
+    string input;
+    cout << "Вводимый текст: \n";
+    getline(cin, input);
+    // Обработка текста
+    pair<int, int> Count = ProcessingText(input); // Возвращает кол-во слов и предложений в тексте
+    // Вывод
+    cout << "Обработанный текст:" << endl;
+    cout << input;
+    cout << "\nВ введённом тексте " << Count.first << " предложений(-я/-е), в которых(-ом) содержится " << Count.second << " слов(-а/-о)\n";
+
+    return 0;
+}

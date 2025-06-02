@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+// Оставляем только цифры
+string OnlyDigits(string input) {
+    string new_text; // Формируемая строка
+    string digits = "01234567890";
+    for (int i = 0; i < input.length(); i++) {
+        for (int j = 0; j < 10; j++) {
+            if (input[i] == digits[j])
+                new_text.push_back(input[i]);
+        }
+    }
+    return new_text;
+}
+
+// Отсортировываем цифры по возрастанию
+string SortDigits(string input) {
+    sort(input.begin(), input.end());
+    return input;
+}
+
+int main() {
+    // Ввод текста
+    setlocale(LC_ALL, "ru");
+    string input;
+    cout << "Вводимый текст: \n";
+    getline(cin, input);
+    // Обработка текста
+    //pair<int, int> Count = ProcessingText(input); // Возвращает кол-во слов и предложений в тексте
+    // Оставляем только цифры
+    string digit_input = OnlyDigits(input);
+    // Отсортировываем цифры по возрастанию
+    string sorted_digit_input = SortDigits(digit_input);
+    // Вывод
+    cout << "Обработанный текст:" << endl;
+    cout << sorted_digit_input;
+    return 0;
+}

@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+// Ввод списка
+int Input(int &len, vector <float>& List) {
+	cout << "Ввод элементов в массив для очереди" << endl;
+	cout << "(Предполагается, что ввод числа '0' означает конец ввода значений)" << endl;
+	float i = 1;
+	while (i != 0) {
+		List.resize(len + 1);
+		cin >> i;
+		List[len] = i;
+		len += 1;
+	}
+	len -= 1;
+	List.resize(len);
+	return len;
+}
+ 
+// Вставка нужного значения
+void Insert(int &len, vector <float>& List) {
+	// Находим элемент с нужным значением
+	float Finding_value = 22;
+	int i = 0;
+	while (List[i] != Finding_value) {
+		i += 1;
+	}
+	// Сдвигаем все элементы правее искомого
+	len += 1;
+	List.resize(len);
+	float insert_value = 0.99;
+	float a = 0;
+	int j = 0;
+
+	while (i + j + 1 < len) {
+		a = List[i + j];
+		List[i + j] = insert_value;
+		insert_value = List[i + j + 1];
+		List[i + j + 1] = a;
+		j += 2;
+	}
+	if (i + j < len)
+		List[i + j] = insert_value;
+}
+
+// Вывод изменённого списка
+void Output(int len, vector <float>& List) {
+	cout << endl;
+	for (int i = 0; i < len; i++)
+		cout << List[i] << endl;
+}
+
+// Точка запуска программы
+int main() {
+	setlocale(LC_ALL, "Russian");
+
+	vector <float> List(0);
+	int len = 0; // Длина списка
+	// Ввод списка
+	Input(len, List);
+	// Вставка нужного значения
+	Insert(len, List);
+	// Вывод изменённого списка
+	Output(len, List);
+	return 0;
+}

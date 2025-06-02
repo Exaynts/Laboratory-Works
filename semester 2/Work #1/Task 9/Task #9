@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+// Ввод символов в файл
+void InputSymbols(const string& filename) {
+    ofstream out(filename, ios::out | ios::binary);
+    if (out.is_open()) {
+        string ch = "";
+        while (ch != "0") { // Строка "0" будет признаком окончания файла
+            out << ch << endl;
+            cin >> ch;
+        }
+    }
+    out.close();
+}
+
+
+// Обработка данных
+void Data_Processing(const string& filename) {
+    ifstream in(filename, ios::in | ios::binary);
+    // Копируем данные файла
+    if (in.is_open()) {
+        vector <string> datastring;
+        string str;
+        while (in >> str) { // Строка "0" будет признаком окончания файла
+            datastring.push_back(str);
+        }
+        // Изменяем данные
+        for (int i = 0; i < datastring.size(); i++) {
+            for (int j = 0; j < datastring[i].size(); j++) {
+                if (datastring[i][j] == '*' or datastring[i][j] == '/') {
+                    datastring[i][j] = '+';
+                }
+            }
+        }
+        // Вставляем эти данные в файл
+        ofstream out(filename, ios::out | ios::binary);
+        for (int i = 0; i < datastring.size(); i++) {
+            out << datastring[i] << endl;
+        }
+    }
+    in.close();
+}
+
+// Вывод данных файла
+void Output_Data(const string& filename) {
+    ifstream in(filename, ios::in | ios::binary);
+    if (in.is_open()) {
+        string ch;
+        while (in >> ch) {
+            cout << ch << endl;
+        }
+        cout << endl;
+    }
+    in.close();
+}
+
+// Точка запуска программы
+int main() {
+    setlocale(LC_ALL, "ru"); // Для вывода символов на кириллице
+    system("chcp 1251 > nul"); // Для ввода символов на кириллице
+    // Открытие файла с данными;
+    string file = "Memo.bin";
+    // Ввод символов в файл
+    InputSymbols(file);
+    cout << "Вывод данных файла до изменений: " << endl;
+    Output_Data(file);
+    // Обработка данных
+    Data_Processing(file);
+    cout << "Вывод данных файла после изменений: " << endl;
+    Output_Data(file);
+
+    return 0;
+}

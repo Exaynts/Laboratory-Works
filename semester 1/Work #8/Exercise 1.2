@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "Russian");
+	// Значение длины списка
+	int const len = 3;
+	cout << "Длина списка = " << len;
+	// Определение полей
+	typedef struct Field {
+		string phone;
+		float price;
+	} field;
+	struct Field fields[len];
+	// Ввод данных очереди
+	for (int i = 0; i < len; i++) {
+		cout << endl << "Телефон # " << i + 1 << ": ";
+		cin >> fields[i].phone;
+		cout << "Цена: ";
+		cin >> fields[i].price;
+	}
+	// "Удаление" первого элемента из очереди
+	for (int i = 0; i < len - 1; i++) {
+		fields[i].phone = fields[i + 1].phone;
+		fields[i].price = fields[i + 1].price;
+	}
+	// Вывод данных очереди
+	cout << endl << endl;
+	for (int i = 0; i < len - 1; i++) {
+		cout << "Телефон # " << i + 1 << ": " << fields[i].phone
+			<< endl << "Цена: " << fields[i].price << endl;
+	}
+	return 0;
+}

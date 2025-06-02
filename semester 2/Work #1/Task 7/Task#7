@@ -1,0 +1,76 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+/*
+Формат файла:
+<число матриц> пробел <порядок матриц>
+пробел
+<строки матрицы>
+пробел
+<строки матрицы>
+...
+*/
+
+// Получаем количество матриц в файле, написанного в первой её строке
+int GetNumberOfMatrices(string file) {
+    ifstream infile(file);
+    int num;
+    infile >> num;
+    return num;
+}
+
+// Добавляем недостающие матрицы
+void AddingIdentityMatrix(string file, int dif) {
+    ifstream infile(file);
+    //Получение данных первой строки
+    int num;
+    infile >> num;
+    int n;
+    infile >> n;
+    ofstream outfile(file, ios::app);
+    for (int i = 0; i < dif; i++) {
+        outfile << endl;
+        // Добавление одной единичной матрицы порядка n
+        for (int i = 0; i < n; i++) {
+            outfile << endl;
+            for (int j = 0; j < n; j++) {
+                if (j == i)
+                    outfile << "1 ";
+                else
+                    outfile << "0 ";
+            }
+        }
+    }
+}
+
+// Вывод содержимого файла
+void OutputFile(string file) {
+    cout << "\n File \"" << file << "\":\n";
+    ifstream infile(file);
+    if (!infile.is_open())
+        cerr << "Ошибка открытия файла";
+    else {
+        string str;
+        while (getline(infile, str)) {
+            cout << str << endl;
+        }
+        infile.close();
+    }
+}
+
+int main() {
+    // Получаем количество матриц в файле
+    int k = GetNumberOfMatrices("k.txt");
+    int l = GetNumberOfMatrices("l.txt");
+    // Добавляем недостающие матрицы
+    int dif = abs(k - l);
+    if (k < l) 
+        AddingIdentityMatrix("k.txt", dif);
+    else
+        AddingIdentityMatrix("l.txt", dif);
+    // Вывод содержимого файлов
+    OutputFile("k.txt");
+    OutputFile("l.txt");
+    return 0;
+}

@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+using namespace std;
+
+// Описание компьютера
+struct Computer {
+    string computername;
+    float processor_frequency; // В ГГц
+    float RAM_size; // в Гб
+    float hard_drive_size; // в Гб
+    float price;
+
+} computer;
+
+// Переопределение оператора <<
+ostream& operator << (ostream& ost, const Computer& computer) {
+    vector <Computer> computers;
+    return ost << computer.computername << " " << computer.processor_frequency
+        << " " << computer.RAM_size << " "
+        << computer.hard_drive_size << " " << computer.price << endl;
+}
+
+// Создание бинарного файла c данными
+void CreateFile(string filename) {
+    struct Computer computer[]{
+    {"Asus", 1.5, 4, 16, 30000},
+    { "IbetterThanAsus", 8, 32, 64, 100500 },
+    { "SomeComp", 2, 2, 12, 50000 }
+    };
+    ofstream ofs(filename, ios::out | ios::binary | ios::trunc);
+    if (ofs.is_open()) {
+           ofs.write((char*)computer, sizeof(computer));
+    }
+}
+
+// Обработка и вывод данных
+void Data_Processing(string filename) {
+    struct Computer comp[3];
+    ifstream ifs(filename, ios::in | ios::binary);
+    float sumprice = 0;
+    if (ifs.is_open()) {
+        int i = 0;
+        ifs.read((char*)&comp, sizeof(Computer));
+    }
+    ifs.close();
+    cout << "Общая цена всех компьютеров, удовлетворяющим условиям, равна " << sumprice;
+}
+
+// Точка запуска программы
+int main() {
+    setlocale(LC_ALL, "ru");
+
+    // Создание бинарного файла c данными
+    string filename = "computers.bin";
+    CreateFile(filename);
+    // Обработка данных
+    Data_Processing(filename);
+
+    return 0;
+}

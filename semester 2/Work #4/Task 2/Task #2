@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    // Создание массива
+    const int n = 5;
+    string peaks[n]{"Лхоцзе", "Джомолунгма", "Дхаулагири", "Камет", "Ракапоши"};
+    int low[2]{0, size(peaks[0])}; // Индекс горы, длина его названия
+    int high[2]{0, size(peaks[0])}; // Индекс горы, длина его названия
+    // Находим горы с самым коротким и длинным названиями
+    for (int i = 0; i < n; i++) {
+        if (size(peaks[i]) < low[1]) {
+            low[0] = i;
+            low[1] = size(peaks[i]);
+        }
+        else if (size(peaks[i]) > high[1]) {
+            high[0] = i;
+            high[1] = size(peaks[i]);
+        }
+    }
+    // Замена местами двух гор в списке
+    swap(peaks[low[0]], peaks[high[0]]);
+    // Вывод нового списка
+    for (int i = 0; i < n; i++) {
+        cout << peaks[i] << endl;
+    }
+}

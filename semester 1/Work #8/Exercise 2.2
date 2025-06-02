@@ -1,0 +1,92 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+// Ввод значений стека
+int Input(int len, vector <int>& List) {
+	cout << "Предполагается, что ввод числа '0' означает конец ввода значений" << endl;
+	int Latest_int = 1;
+	while (Latest_int != 0) {
+		List.resize(len + 1);
+		cin >> Latest_int;
+		List[len] = Latest_int;
+		len += 1;
+	}
+	len -= 1;
+	List.resize(len);
+	return len;
+}
+// Добавление элементов
+int Push(int len, vector <int>& List) {
+	int push = 1;
+	while (push != 0) {
+		cout << "Добавляете: ";
+		List.resize(len + 1);
+		cin >> push;
+		List[len] = push;
+		len += 1;
+		List.resize(len);
+	}
+	len -= 1;
+	List.resize(len);
+	return len;
+}
+// Удаление элементов
+int Pop(int len, vector <int>& List) {
+	int i = 0, view_i = 1;
+	while (i < len) {
+		cout << "Удалить число #" << view_i << "? (Напишите 'Yes' или 'No'): ";
+		string pop;
+		cin >> pop;
+		if (pop == "Yes") {
+			for (int j = 0; i + j + 1 < len; j++) {
+				List[i + j] = List[i + j + 1];
+			}
+			i -= 1;
+			len -= 1;
+			List.resize(len);
+		}
+		i += 1;
+		view_i += 1;
+	}
+	return len;
+}
+// Вывод стека
+void Output(int len, vector <int>& List) {
+	for (int i = 0; i < len; i++) {
+		cout << "List[" << i + 1 << "] = " << List[i] << endl;
+	}
+}
+
+// Вывод стека
+void More_three(int len, vector <int>& List) {
+	int more_three = 0;
+	for (int i = 0; i < len; i++) {
+		if (List[i] > 3)
+			more_three += 1;
+	}
+	cout << "В стеке " << more_three << " элемент(-а)(-ов) больших трёх";
+}
+
+// Точка запуска программы
+int main() {
+	setlocale(LC_ALL, "Russian");
+
+	vector <int> List(0);
+	int len = 0;
+	// Ввод значений стека
+	len = Input(len, List);
+
+	// Добавление элементов1
+	len = Push(len, List);
+	// Вывод стека1
+	Output(len, List);
+	// Добавление элементов2
+	len = Push(len, List);
+	// Вывод стека2
+	Output(len, List);
+	// Нахождение количества элементов в стеке больших трёх
+	More_three(len, List);
+	return 0;
+}

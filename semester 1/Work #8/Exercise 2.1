@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+// Ввод значений стека
+int Input(int len, vector <string>& List) {
+	cout << "Предполагается, что ввод строки '0' означает конец ввода значений" << endl;
+	string Latest_string = "1";
+	while (Latest_string != "0") {
+		List.resize(len + 1);
+		cin >> Latest_string;
+		List[len] = Latest_string;
+		len += 1;
+	}
+	len -= 1;
+	List.resize(len);
+	return len;
+}
+
+// Добавление элементов
+int Push(int len, vector <string>& List) {
+	string push = "1";
+	while (push != "0") {
+		cout << "Добавляете: ";
+		List.resize(len + 1);
+		cin >> push;
+		List[len] = push;
+		len += 1;
+		List.resize(len);
+	}
+	len -= 1;
+	List.resize(len);
+	return len;
+}
+
+// Удаление элементов
+int Pop(int len, vector <string>& List) {
+	int i = 0, view_i = 1;
+
+	while (i < len) {
+		cout << "Удалить строку #" << view_i << "? (Напишите 'Yes' или 'No'): ";
+		string pop;
+		cin >> pop;
+		if (pop == "Yes") {
+			for (int j = 0; i + j + 1 < len; j++) {
+				List[i + j] = List[i + j + 1];
+			}
+			i -= 1;
+			len -= 1;
+			List.resize(len);
+		}
+		i += 1;
+		view_i += 1;
+	}
+	return len;
+}
+
+// Вывод стека
+void Output(int len, vector <string>& List) {
+	for (int i = 0; i < len; i++) {
+		cout << "List[" << i + 1 << "] = " << List[i] << endl;
+	}
+}
+
+// Нахождение строки минимальной длины
+void Minstring(int len, vector <string>& List) {
+	string min_string = List[0];
+	int min_string_len = List[0].length();
+	for (int i = 0; i < len; i++) {
+		if (List[i].length() < min_string_len) {
+			min_string_len = List[i].length();
+			min_string = List[i];
+		}
+	}
+	cout << "Строка минимальной длины из стека -- это '" << min_string << "'";
+}
+
+// Точка запуска программы
+int main() {
+	setlocale(LC_ALL, "Russian");
+
+	vector <string> List(0);
+	int len = 0;
+	// Ввод значений стека
+	len = Input(len, List);
+	// Добавление элементов
+	len = Push(len, List);
+	// Вывод стека1
+	Output(len, List);
+	// Удаление элементов
+	len = Pop(len, List);
+	// Вывод стека2
+	Output(len, List);
+	// Нахождение строки минимальной длины
+	Minstring(len, List);
+	return 0;
+}

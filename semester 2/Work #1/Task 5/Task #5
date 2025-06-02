@@ -1,0 +1,109 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+using namespace std;
+
+// Описание рабочего
+struct Worker {
+    string surname; 
+    string name; 
+    string patronymic; 
+    struct Address {
+        int postal_code;
+        string country; 
+        string region; 
+        string district; 
+        string city; 
+        string street;
+        int house;
+        int apartment;
+    } address;
+    string nationality; 
+    struct Date_of_birth {
+        int year; 
+        int month;
+        int day;
+    } date_of_birth;
+    int workshop_number; 
+    int personnel_number; 
+    string education; 
+    int year_of_employment;
+} worker;
+
+//Просмотр содержимого файла
+vector <Worker> ReadFile(const string& filename) {
+    vector <Worker> workers;
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Ошибка открытия файла" << endl;
+    }
+    else {
+        Worker worker;
+        while (file >> worker.surname >> worker.name >> worker.patronymic >> worker.address.postal_code >> worker.address.country >> worker.address.region >> 
+            worker.address.district >> worker.address.city >> worker.address.street >> worker.address.house >> worker.address.apartment >> 
+            worker.nationality >> worker.date_of_birth.year >> worker.date_of_birth.month >> worker.date_of_birth.day >> 
+            worker.workshop_number >> worker.personnel_number >> worker.education >> worker.year_of_employment) {
+            workers.push_back(worker);
+        }
+        file.close();
+    }
+    return workers;
+}
+// Просмотр данных о рабочих
+void printWorkers(const vector<Worker>& workers) {
+    cout << endl << "Рабочие: " << endl;
+    for (const auto& worker : workers) {
+        cout << worker.surname << " " << worker.name << " " << worker.patronymic << " " << worker.address.postal_code << " " << worker.address.country << " " <<
+            worker.address.region << " " <<
+            worker.address.district << " " << worker.address.city << " " << worker.address.street << " " << worker.address.house << " " << worker.address.apartment << " " <<
+            worker.nationality << " " << worker.date_of_birth.year << " " << worker.date_of_birth.month << " " << worker.date_of_birth.day << " " <<
+            worker.workshop_number << " " << worker.personnel_number << " " << worker.education << " " << worker.year_of_employment << endl;
+    }
+}
+// Обработка данных
+vector<Worker> Data_Processing(const vector<Worker>& workers) {
+    vector<Worker> Filtered_Workers;
+    for (const auto& worker : workers) {
+        if (worker.year_of_employment == 2010) {
+            Filtered_Workers.push_back(worker);
+        }
+    }
+    return Filtered_Workers;
+}
+void SaveFile(const vector<Worker>& filtered_workers) {
+    ofstream Filtered_workers("Filtered_Workers.txt");
+    if (!Filtered_workers.is_open()) {
+        cerr << "Не удалось открыть файл для записи результатов.\n";
+    }
+    else {
+        for (const auto& worker : filtered_workers) {
+            Filtered_workers << worker.surname << " " << worker.name << " " << worker.patronymic << " " << worker.address.postal_code << " " << worker.address.country << " " <<
+                worker.address.region << " " <<
+                worker.address.district << " " << worker.address.city << " " << worker.address.street << " " << worker.address.house << " " << worker.address.apartment << " " <<
+                worker.nationality << " " << worker.date_of_birth.year << " " << worker.date_of_birth.month << " " << worker.date_of_birth.day << " " <<
+                worker.workshop_number << " " << worker.personnel_number << " " << worker.education << " " << worker.year_of_employment << endl;
+        }
+        Filtered_workers.close();
+    }
+}
+
+// Точка запуска программы
+int main() {
+    setlocale(LC_ALL, "ru");
+
+    // Открытие файла с данными
+    ifstream Workers;
+    Workers.open("Workers.txt");
+    //Просмотр данных о рабочих
+    vector <Worker> workers = ReadFile("Workers.txt");
+    // Просмотр данных о рабочих
+    printWorkers(workers);
+    // Обработка данных
+    vector<Worker> filtered_workers = Data_Processing(workers);
+    // Просмотр данных об отфильтрованных рабочих (которые устроились на работу в 2010 году)
+    printWorkers(filtered_workers);
+    // Cохранение отфильтрованных данных в новый файл
+    SaveFile (filtered_workers);
+
+    return 0;
+}

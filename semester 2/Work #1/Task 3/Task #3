@@ -1,0 +1,24 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    ifstream inFile;
+    ofstream withoutDigitFile;
+    inFile.open("a.txt");
+    withoutDigitFile.open("a2.txt");
+    if (!inFile.is_open() or !withoutDigitFile.is_open())
+        cout << "Ошибка открытия файлов";
+    else {
+        char ch;
+        while (inFile.get(ch)) {
+            if (!isdigit(ch)) {
+                withoutDigitFile << ch;
+            }
+        }
+        inFile.close();
+        withoutDigitFile.close();
+    }
+    return 0;
+}

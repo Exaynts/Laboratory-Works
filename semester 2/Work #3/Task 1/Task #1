@@ -1,0 +1,54 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <cassert>
+using namespace std;
+
+// Обработка текста
+int ProcessingText(string& text) {
+    // Определение строк
+    string substring{ "кризис" };
+    string replacestr{ "проблема" };
+    string deletestr{ "компьютер" };
+    string new_text; // Формируемая строка
+    size_t count = 0;  // Cчетчик числа вхождений выбранного слова
+    // Цикл перебора символов в исходном тексте
+    for (string::size_type i = 0; i < text.length(); i++)
+        if (text[i] == substring[0]) {
+            // Удаление слова
+            if (text.substr(i, deletestr.length()) == deletestr) {
+                i += deletestr.length() - 1;
+            }
+            // Замена слова
+            else if (text.substr(i, substring.length()) == substring) {
+                new_text.append(replacestr);
+                count += 1;
+                i += substring.length() - 1;
+            }
+            else
+                new_text.push_back(text[i]);
+        }
+
+        else {
+            new_text.push_back(text[i]);
+        }
+    text = new_text;
+    return count;
+}
+
+int main() {
+    // Ввод текста
+    setlocale(LC_ALL, "ru");
+    system("chcp 1251 > nul");
+    string input;
+    cout << "Вводимый текст: " << endl;
+    getline(cin, input);
+    // Обработка текста
+    int count = ProcessingText(input);
+    // Вывод
+    cout << "Слово 'кризис' встретилось в введённом тексте " << count << " раз(-а)" << endl;
+    cout << "Обработанный текст:" << endl;
+    cout << input;
+
+    return 0;
+}

@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+// Сортируем текст
+string SortDigits(string input) {
+    sort(input.begin(), input.end());
+    return input;
+}
+
+void IsEgual(string S1, string S2) {
+    if (S1 == S2)
+        cout << "\nДа, перестановкой из S1 получить S2 можно\n";
+    else
+        cout << "\nНет, перестановкой из S1 получить S2 нельзя\n";
+}
+
+int Count_spaces(string S2) {
+    int spaces = 0;
+    for (int i = 0; i < S2.length(); i++) {
+        if (S2[i] == ' ')
+            spaces += 1;
+    }
+    return spaces;
+}
+int main() {
+
+    // Ввод S1 и S2
+    setlocale(LC_ALL, "ru");
+    system("chcp 1251 > nul");
+
+    string S1;
+    cout << "S1: ";
+    getline(cin, S1);
+    string S2;
+    cout << "S2: ";
+    getline(cin, S2);
+    // Сортировка строк
+    S1 = SortDigits(S1);
+    S2 = SortDigits(S2);
+    // Вывод
+    IsEgual(S1, S2);
+    cout << "В строке S2 всего " << Count_spaces(S2) << " пробел(-а/-ов)";
+
+    return 0;
+}

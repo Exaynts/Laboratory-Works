@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    // Создание массивов
+    const int n = 5;
+    vector <string> peaks{ "Лхоцзе", "Джомолунгма", "Дхаулагири", "Камет", "Ракапоши" };
+    vector <string> long_peaks;
+    int long_peaks_len = 0;
+    // Список вершин, с названиями длиннее 7 букв
+    for (int i = 0; i < n; i++) {
+        if (size(peaks[i]) > 7) {
+            long_peaks.push_back(peaks[i]);
+            long_peaks_len += 1;
+        }
+    }
+    // Сортировка списка
+    sort(long_peaks.begin(), long_peaks.end());
+    // Вывод нового списка
+    for (int i = 0; i < long_peaks_len; i++) {
+        cout << long_peaks[i] << endl;
+    }
+    return 0;
+}

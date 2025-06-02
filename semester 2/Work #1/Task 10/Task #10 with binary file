@@ -1,0 +1,84 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+using namespace std;
+
+// Описание клиента
+struct Client {
+    char SurnameNP[63]; // Фамилия и инициалы
+    float cost_of_services;
+    int paid_month;
+    int paid_month_in_advance;
+} client;
+
+// Создание бинарного файла c данными
+void CreateFile(string& filename) {
+    struct Client client[]{
+    {"Залин_А.А.", 600, 3, 3},
+    {"Левченко_А.М.", 500, 1, 0},
+    {"Мурье_Н.Д.", 800, 6, 9},
+    {"Новиков_Н.Н.", 555, 2, 10}
+    };
+    ofstream ofs(filename, ios::out | ios::binary);
+    if (ofs.is_open()) {
+        for (auto& cli : client) {
+            ofs.write((char*)&cli, sizeof(cli));
+        }
+    }
+}
+
+// Обработка данных
+void Data_Processing(string& filename) {
+    ifstream in(filename, ios::in | ios::binary);
+    struct Client client[4];
+    if (in.is_open()) {
+        int i = 0;
+        while (in.read((char*)&client[i], sizeof(client[i]))) {
+            if (client[i].paid_month_in_advance > 3) {
+                client[i].cost_of_services *= (1 - 0.05);
+            }
+            i++;
+        }
+
+    }
+    in.close();
+
+    ofstream out(filename, ios::out | ios::binary);
+    if (out.is_open()) {
+        int i = 0;
+        for (auto& cli : client) {
+            out.write((char*)&cli, sizeof(cli));
+            i++;
+        }
+    }
+    out.close();
+}
+
+// Вывод данных
+void Output_Data(string& filename) {
+    ifstream in(filename, ios::in | ios::binary);
+    cout << "Данные клиентов: " << endl;
+    struct Client cli[4];
+    if (in.is_open()) {
+        int i = 0;
+        while (in.read((char*)&cli[i], sizeof(Client))) {
+            cout << " " << cli[i].SurnameNP << " " << cli[i].cost_of_services << " "
+                << cli[i].paid_month << " " << cli[i].paid_month_in_advance<< endl;
+        }
+    }
+}
+
+// Точка запуска программы
+int main() {
+    setlocale(LC_ALL, "ru");
+
+    // Создание бинарного файла c данными
+    string filename = "clients.bin";
+    CreateFile(filename);
+    // Обработка данных
+    Data_Processing(filename);
+    // Вывод данных
+    Output_Data(filename);
+
+    return 0;
+}

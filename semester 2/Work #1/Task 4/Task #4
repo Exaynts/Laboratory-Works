@@ -1,0 +1,26 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    ifstream inFile;
+    inFile.open("a.txt");
+    if (!inFile.is_open())
+        cout << "Ошибка открытия файлов";
+    else {
+        int number; // Считываемое число
+        int NumberIndex = 0;
+        int answer = 0; // Счетчик подходящих чисел
+        while (inFile >> number) {
+            cout << number << endl;
+            if (number < 0 and NumberIndex % 2 == 0) {
+                answer += 1;
+            }
+            NumberIndex += 1;
+        }
+        inFile.close();
+        cout << "Отрицательных чисел на чётных позициях в файле всего " << answer; // Позиции считаются начиная с нуля
+    }
+    return 0;
+}

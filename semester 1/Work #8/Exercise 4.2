@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Ввод списка
+int Input(int &len, vector <string>& List) {
+	cout << "Ввод строк" << endl;
+	cout << "(Предполагается, что ввод числа '0' означает конец ввода значений)" << endl;
+	string i = "1";
+	while (i != "0") {
+		List.resize(len + 1);
+		cin >> i;
+		List[len] = i;
+		len += 1;
+	}
+	len -= 1;
+	List.resize(len);
+	return len;
+}
+ 
+// Подсчёт латинских букв
+void Count_Latin_Letters(int &len, vector <string>& List) {
+	int sum = 0;
+	for (int i = 0; i < len; i++) {
+		for (char a: List[i]) {
+			if (isalpha(a))
+				sum += 1;
+		}
+	}
+	cout << "Количество найденных латинских букв равно " << sum;
+}
+
+// Вывод изменённого списка
+void Output(int len, vector <string>& List) {
+	cout << endl;
+	for (int i = 0; i < len; i++)
+		cout << List[i] << endl;
+}
+
+// Точка запуска программы
+int main() {
+	setlocale(LC_ALL, "Russian");
+
+	vector <string> List(0);
+	int len = 0; // Длина списка
+	// Ввод списка
+	Input(len, List);
+	// Подсчёт латинских букв
+	Count_Latin_Letters(len, List);
+	return 0;
+}

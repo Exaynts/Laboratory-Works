@@ -1,0 +1,85 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Ввод списка
+int Input(int &len, vector <int>& List) {
+	cout << "Ввод чисел" << endl;
+	cout << "(Предполагается, что ввод числа '0' означает конец ввода значений)" << endl;
+	int i = 1;
+	while (i != 0) {
+		List.resize(len + 1);
+		cin >> i;
+		List[len] = i;
+		len += 1;
+	}
+	len -= 1;
+	List.resize(len);
+	return len;
+}
+
+// Удаление элементов, кратных трём
+void Delete_Elements(int& len, vector <int>& List) {
+	for (int i = 0; i < len; i++) {
+		if (List[i] % 3 == 0) {
+			int j = 0;
+			while (i + j + 1 < len) {
+				List[i + j] = List[i + j + 1];
+				j++;
+			}
+			i -= 1;
+			len -= 1;
+			List.resize(len);
+		}
+	}
+}
+// Вставка элементов
+void Insert(int& len, vector <int>& List) {
+	// Проходим по всему списку
+	for (int i = 0; i+1 < len; i++) {
+
+		if (List[i] == List[i+1]) {
+			// Сдвигаем все элементы правее искомого
+			len += 1;
+			List.resize(len);
+			int insert_value = 88;
+			int a = 0;
+			int j = 2;
+
+			while (i + j + 1 < len) {
+				a = List[i + j];
+				List[i + j] = insert_value;
+				insert_value = List[i + j + 1];
+				List[i + j + 1] = a;
+				j += 2;
+			}
+			if (i + j < len)
+				List[i + j] = insert_value;
+			i++;
+		}
+	}
+}
+
+// Вывод изменённого списка
+void Output(int len, vector <int>& List) {
+	cout << endl;
+	for (int i = 0; i < len; i++)
+		cout << List[i] << endl;
+}
+
+// Точка запуска программы
+int main() {
+	setlocale(LC_ALL, "Russian");
+
+	vector <int> List(0);
+	int len = 0; // Длина списка
+	// Ввод списка
+	Input(len, List);
+	// Удаление элементов, кратных трём
+	Delete_Elements(len, List);
+	// Вставка элементов
+	Insert(len, List);
+	// Вывод списка
+	Output(len, List);
+	return 0;
+}

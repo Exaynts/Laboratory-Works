@@ -1,0 +1,104 @@
+#include <iostream>
+#include <math.h>
+#include <vector>
+using namespace std;
+
+class Rectangle {
+public:
+    int x1;
+    int y1;
+    int x2;
+    int y2;
+    // Конструктор объекта по умолчанию
+    Rectangle() {
+        x1 = 0;
+        y1 = 0;
+        x2 = 0;
+        y2 = 0;
+    }
+    // Конструктор перезагрузки с параметрами;
+    Rectangle(int p_x1, int p_y1, int p_x2, int p_y2) {
+        x1 = p_x1;
+        y1 = p_y1;
+        x2 = p_x2;
+        y2 = p_y2;
+    }
+    // Деструктор объекта
+    ~Rectangle() {
+        cout << "The rectangle has removed" << endl;
+    }
+    // Обработка значений полей (Вычисление длины диагонали)
+    float CalculatingOfDiagonal(int x1, int y1, int x2, int y2) {
+        float diagonal;
+        diagonal = pow(((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)), 0.5);
+        return diagonal;
+    }
+    // Строка информации об объекте
+    void InfoOfRectangle(int x1, int y1, int x2, int y2) {
+        cout << endl << "x1 = " << x1 << ", y1 = " << y1 << ", x2 = " << x2 << ", y2 = " << y2 <<
+            ", rectangle's diagonal = " << CalculatingOfDiagonal(x1, y1, x2, y2) << endl;
+    }
+
+
+    // Отрисовка прямоугольника
+    void Drawing(int x1, int y1, int x2, int y2) {
+        cout << "*Getting rectangle's image and its diagonal*" << endl;
+        // Создание матрицы для прямоугольника
+        int xx = abs(x2 - x1) + 1;
+        int yy = abs(y2 - y1) + 1;
+        vector <vector<string>> Matrix(xx, vector <string>(yy));
+        // Заполнение значением по умолчанию
+        for (int i = 1; i < xx - 1; i++) {
+            for (int j = 1; j < yy - 1; j++) {
+                Matrix[i][j] = " ";
+            }
+        }
+        // Заполнение сторон прямоугольника
+        for (int i = 0; i < yy; i++) {
+            Matrix[0][i] = "*";
+            Matrix[xx - 1][i] = "*";
+        }
+        for (int i = 0; i < xx; i++) {
+            Matrix[i][0] = "*";
+            Matrix[i][yy - 1] = "*";
+        }
+        // Заполнение диагонали прямоугольника
+        for (int i = 0; i < xx; i++) {
+            int j1 = i * yy / xx;
+            int j2 = (i+1) * yy / xx;
+            for(j1; j1 < j2; j1++) {
+                Matrix[i][j1] = "*";
+            }
+        // Вывод матрицы на консоль
+        for (int i = 0; i < xx; i++) {
+            cout << endl;
+            for (int j = 0; j < yy; j++) {
+                cout << Matrix[i][j];
+            }
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    // Ввод данных
+    int x1, y1, x2, y2;
+    cout << "Enter x1: ";
+    cin >> x1;
+    cout << "Enter y1: ";
+    cin >> y1;
+    cout << "Enter x2: ";
+    cin >> x2;
+    cout << "Enter y2: ";
+    cin >> y2;
+    // Создание объекта класса Legs
+    Rectangle rectangle(x1, y1, x2, y2);
+    // Вывод информации
+    rectangle.InfoOfRectangle(x1, y1, x2, y2);
+    rectangle.Drawing(x1, y1, x2, y2);
+    // Выполнение программы для значений-констант
+    const int xx1 = 6, yy1 = 8, xx2 = 0, yy2 = 0;
+    rectangle.InfoOfRectangle(xx1, yy1, xx2, yy2);
+    rectangle.Drawing(xx1, yy1, xx2, yy2);
+    return 0;
+}

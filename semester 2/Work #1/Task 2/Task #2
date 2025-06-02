@@ -1,0 +1,24 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    ifstream inFile;
+    ofstream outFile;
+    inFile.open("a.txt");
+    outFile.open("a2.txt");
+    if (!inFile.is_open() or !outFile.is_open())
+        cout << "Ошибка открытия файлов";
+    else {
+        double number;
+        while (inFile >> number) {
+            if (number != 0) {
+                outFile << number << endl;
+            }
+        }
+        inFile.close();
+        outFile.close();
+    }
+    return 0;
+}
