@@ -9,7 +9,7 @@ namespace Test {
         private double a, h;
         // Конструкторы
         public Pyramid4() { a = 1; h = 1; }
-        public Pyramid4(double height) { a = 1; h = height; }
+        public Pyramid4(double height): this() { a = 1; h = height; }
         private Pyramid4(double base_side, double height) { a = base_side; h = height;}
         // Ввод данных
         private void Load() {
