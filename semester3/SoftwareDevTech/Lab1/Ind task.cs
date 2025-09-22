@@ -1,8 +1,9 @@
 using System;
 using System.IO;
 using System.Text;
+
 namespace Test {
-    // Класс цилиндра
+    // Класс прямоугольного параллелепипеда
     class Cylinder
     {
         private double r, h, pi = Math.PI;
@@ -32,6 +33,7 @@ namespace Test {
             Console.WriteLine(string.Format("Объём = {0:0.00}", GetV()));
         }
     }
+
     class Program 
     {
         static void Main(string[] args) {
