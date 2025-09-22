@@ -1,7 +1,8 @@
 using System;
 using System.IO;
 using System.Text;
-namespace Test {
+namespace Test
+{
     // Класс прямоугольного параллелепипеда
     class Parallelepiped
     {
@@ -16,16 +17,20 @@ namespace Test {
         public double GetV() { return a * b * c; }
         public void Info()
         {
-            Console.WriteLine("Параллепипед: ");
+            String str = "**************************\n" +
+             "*                        *\n" +
+             "*     параллелепипед     *\n" +
+             "*                        *\n" +
+             "**************************\n";
+            Console.WriteLine(str);
             Console.WriteLine($"a: {a} b: {b} c: {c}", a, b, c);
-            Console.WriteLine(string.Format("S = {0:0.00}", GetS()));
-            Console.WriteLine(string.Format("V = {0:0.00}", GetV()));
+            Console.WriteLine(string.Format("S = {0:0.00}, V = {1:0.00}", GetS(), GetV()));
         }
-    }
-    class Program 
-    {
-        static void Main(string[] args) {
-            // Для Release
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                // Для Release
 #if !DEBUG
             TextWriter save_out = Console.Out;
             TextReader save_in = Console.In;
@@ -41,9 +46,9 @@ namespace Test {
             Console.SetOut(new_out);
             Console.SetIn(new_in);
 #endif
-            Parallelepiped p = new Parallelepiped();
-            p.Load(); // Чтение из файла par_input.txt
-            p.Info(); // Вывод в файл par_output.txt
+                Parallelepiped p = new Parallelepiped();
+                p.Load(); // Чтение из файла par_input.txt
+                p.Info(); // Вывод в файл par_output.txt
 #if !DEBUG
             // Сохранение данных ввода и вывода
             Console.SetOut(save_out);
@@ -51,8 +56,9 @@ namespace Test {
             Console.SetIn(save_in);
             new_in.Close();
 #else
-    Console.ReadKey();
+                Console.ReadKey();
 #endif
+            }
         }
     }
 }
