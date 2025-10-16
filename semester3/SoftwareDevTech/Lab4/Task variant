@@ -1,0 +1,46 @@
+/* File Form1.cs */
+    private double factorial(int n) {
+            double res = 1;
+            for (int i = 1; i <= n; i++) { res *= i; }
+            return res;
+        }
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                double X = Convert.ToDouble(textBox_X.Text);
+                double Y = Convert.ToDouble(textBox_Y.Text);
+                double N = Convert.ToDouble(textBox_Num.Text);
+                try
+                {
+                    double item = 0;
+                    double res = 0;
+                    for (int i = 0; i < N; i++)
+                    {
+                        item = (i % 2 == 0) ? Y : X;
+                        res += Math.Pow(-1, i % 2) * Math.Pow(item, i) / factorial(i+1);
+                    }
+                    textBox_result.Text = res.ToString();
+                }
+                catch { textBox_result.Text = "Error"; }
+            }
+            else if (radioButton2.Checked)
+            {
+                double c = Convert.ToDouble(textBox_c.Text);
+                double N = Convert.ToDouble(textBox_N.Text);
+                double R = Convert.ToDouble(textBox_R.Text);
+                try
+                {
+                    double res = 0;
+                    for (int i = 1; i <= N; i++)
+                    {
+                        for (int j = 1; j <= R; j++)
+                        {
+                            res += (3 + j) / (c * i);
+                        }
+                        textBox_result.Text = res.ToString();
+                    }
+                }
+                catch { textBox_result.Text = "Error"; }
+            }
+        }
